@@ -89,7 +89,8 @@ const Kanban = () => {
       <Button type="link" onClick={() => navigate("/")}>Home</Button>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {cards.length > 0 && cards.map((item, cardIndex) =>
-          <KanbanCard item={item} 
+          <KanbanCard key={cardIndex} 
+                item={item} 
                 cardIndex={cardIndex}
                 anchorEl={anchorEl}
                 addTask={addTask}
