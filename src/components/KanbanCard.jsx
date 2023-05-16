@@ -6,8 +6,7 @@ const KanbanCard = (props) => {
   const taskRef = React.useRef();
 
   return (
-    <>
-          <div onDragOver={(event) => event.preventDefault()} onDrop={(event) => props.onTaskDrop(event, props.cardIndex)} key={'div-' + props.cardIndex} style={{ maxWidth: '25%', marginTop: 10, marginLeft: 10 }}>
+         <div onDragOver={(event) => event.preventDefault()} onDrop={(event) => props.onTaskDrop(event, props.cardIndex)} key={'div-' + props.cardIndex} style={{ maxWidth: '25%', marginTop: 10, marginLeft: 10 }}>
             <Card key={'card-' + props.cardIndex} style={{ backgroundColor: '#faf8f0' }} variant="outlined">
               <TextField variant="standard" defaultValue={props.item.title} size='large' onChange={(event) => props.renameColumnName(event.target.value, props.cardIndex)} style={{ width: '70%', paddingLeft: 20, paddingTop: 20 }} />
               <IconButton aria-label="settings" onClick={(event) => props.handleClick(event, props.cardIndex)} style={{ justifyContent: 'right' }}>
@@ -21,7 +20,7 @@ const KanbanCard = (props) => {
                 onClose={props.handleClose}
               >
                 <MenuItem onClick={props.handleClear}>Clear</MenuItem>
-                {props.item.length > 1 ? <MenuItem onClick={props.handleDelete}>Delete</MenuItem> : ''}
+                <MenuItem onClick={props.handleDelete}>Delete</MenuItem>
               </Menu>
 
               <CardContent key={'cardContent-' + props.cardIndex} style={{ overflow: 'auto', maxHeight: 200 }}>
@@ -39,8 +38,7 @@ const KanbanCard = (props) => {
                 </Button>
               </CardActions>
             </Card>
-          </div>
-    </>)
+          </div>)
 }
 
 export default KanbanCard;

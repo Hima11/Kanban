@@ -8,11 +8,10 @@ const Kanban = () => {
   const localStorageItems = JSON.parse(localStorage.getItem('TaskItems') || '[]')
   const [cards, setCards] = React.useState(localStorageItems.length > 0 ? localStorageItems : [{ title: "To-Do", tasks: [] }])
   const [isNewColumn, setIsNewColumn] = React.useState(false)
-  const [newColumn, setNewColumn] = React.useState('')
-  const [selectedCardIndex, setSelectedCardIndex] = React.useState('')
   const [draggedTask, setDraggedTask] = React.useState({})
   const [anchorEl, setanchorEl] = React.useState('')
   const columnRef = React.useRef();
+  const selectedCardIndex = React.useRef();
 
   React.useEffect(() => {
     localStorage.setItem('TaskItems', JSON.stringify(cards));
@@ -34,13 +33,12 @@ const Kanban = () => {
       setCards([...cards, { title: columnRef.current.value, tasks: [] }]);
     else
       alert('Cannot add more than 5 columns');
-    setNewColumn(columnRef.current.value)
     setIsNewColumn(false);
   }
 
   const handleClick = (event, index) => {
     setanchorEl(event.currentTarget);
-    setSelectedCardIndex(index);
+    selectedCardIndex.current = index;
   };
 
   const handleClose = () => {
@@ -50,19 +48,19 @@ const Kanban = () => {
   const handleDelete = () => {
     let cardsCopy = [...cards];
     // Delete the card
-    if (cardsCopy.length > 1)
-      cardsCopy.splice(selectedCardIndex, 1);
+    if (cardsCopy.length > 0)
+      cardsCopy.splice(selectedCardIndex.current, 1);
     setCards(cardsCopy);
     setanchorEl(null);
-    setSelectedCardIndex('');
+    selectedCardIndex.current = '';
   }
 
   const handleClear = () => {
     let cardsCopy = [...cards];
-    cardsCopy[selectedCardIndex].tasks.splice(0, cardsCopy[selectedCardIndex].tasks.length);
+    cardsCopy[selectedCardIndex.current].tasks.splice(0, cardsCopy[selectedCardIndex.current].tasks.length);
     setCards(cardsCopy);
     setanchorEl(null);
-    setSelectedCardIndex('')
+    selectedCardIndex.current = '';
   }
 
   const renameColumnName = (value, index) => {
